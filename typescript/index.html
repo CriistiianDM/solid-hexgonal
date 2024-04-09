@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>to-do</title>
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+    <body>
+         <main class="container-primary">
+            <header>
+                <h1>- TASK LIST -</h1>
+            </header>
+            <section class="section-new-task">
+                <a id="add-task">add Task</a>
+                <div class="display-none" tag="form">
+                     <form id="form-new-task">
+                            <label> Title Task </label>
+                            <input type="text" /> 
+                            <label> Descriptation Task </label>
+                            <input type="text" />
+                            <label> Type Select </label>
+                            <select>
+                                <option value="0" name="type-1">Type 1</option>
+                                <option value="1" name="type-2">Type 2</option>
+                                <option value="2" name="type-3">Type 3</option>
+                            </select>
+                            <button type="submit">
+                                Create Task
+                            </button>
+                     </form>
+                </div>
+            </section>
+         </main>
+         <script src="dist/bundle.js"></script>
+    </body>
+</html>

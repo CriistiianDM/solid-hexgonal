@@ -1,0 +1,73 @@
+
+/*
+    Font
+*/
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@200;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;400&display=swap');
+
+* {
+    box-sizing: content-box;
+    font-family: var(--text-general-primary);
+}
+
+body, html {
+    padding: unset;
+    margin: unset;
+}
+
+h1 {
+    color: var(--color-primary);
+}
+
+.container-primary {
+    display: grid;
+    place-items: center;
+    width: 100vw;
+}
+
+.section-new-task {
+    display: grid;
+    width: 100%;
+    padding: 14px;
+    overflow: hidden;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    width: calc(100% - 20px);
+    height: 3em;
+    padding: 10px;
+}
+
+.display-none {
+    display: none;
+}
+
+/*
+   Variables Css
+*/
+:root {
+    --color-primary-background: #f5f5f5;
+    --color-background-off: #A1A1A1;
+    --color-primary: #001019;
+    --color-blue-page-primary: rgba(28, 43, 50, 0.25);
+    --background-terciary-color: #203138;
+    --text-general-primary: 'Quicksand', sans-serif;
+    --color-rbga-primary: rgba(228, 57, 70, 0.46);
+    --color-red-primary: #E43946;
+    --color-background-product: rgba(28, 43, 50, 0.54);
+    --color-separate-line: #A5ABAE;
+    --color-white: #fff;
+    --color-bg-header: #0A1821;
+    --color-bg-menu-item: #E4394675;
+    --color-bg-img-product: #1D333D;
+    --color-bg-button-secondary: #740C18;
+    --color-bg-popup: #1D272C;
+    --color-bg-conatiner-primary: #69232E;
+    --color-1: #1e0039;
+    --color-2: #604d9e;
+    --color-3: #a27eb8;
+    --color-4: #aaa2d8;
+    --color-5: #e4d6f8;
+}
