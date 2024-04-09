@@ -1,6 +1,6 @@
 import AbsHandlerEvent from "../../domain/entities/absHandlerEvent";
-import ILocalstore from "../../domain/interfaces/localstoreData";
-import IRenderTable from "../../domain/interfaces/renderTable";
+import { ILocalstore } from "../../domain/types/localstoreData";
+import { IRenderTable } from "../../domain/types/renderTable";
 import { initCheckbox } from "../events/evCheckbox";
 
 /**

@@ -1,9 +1,9 @@
 import AbsHandlerEvent from "../../domain/entities/absHandlerEvent";
-import IRenderTable from "../../domain/interfaces/renderTable";
-import ILocalstoreIndex from "../../domain/interfaces/localsotreIndex";
-import ILocalstore from "../../domain/interfaces/localstoreData";
+import { IRenderTable } from "../../domain/types/renderTable";
+import { ILocalstoreIndex } from "../../domain/types/localsotreIndex";
+import { ILocalstore } from "../../domain/types/localstoreData";
 import config from "../../config/config";
-import ITaskData from "../../domain/interfaces/taskData";
+import { ITaskData } from "../../domain/types/taskData";
 import { initCheckbox } from "../events/evCheckbox";
 
 /**

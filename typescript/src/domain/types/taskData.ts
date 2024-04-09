@@ -1,7 +1,7 @@
 /**
  * interface data task 
 */
-export default interface ITaskData {
+export type ITaskData = {
     id: number;
     title: string;
     desc: string;

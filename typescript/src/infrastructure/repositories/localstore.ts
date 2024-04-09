@@ -1,6 +1,6 @@
 import AbsLocalstore from "../../domain/entities/AbsLocalstore";
 import AbsLocalstoreIndex from "../../domain/entities/absLocalstoreIndex";
-import ITaskData from "../../domain/interfaces/taskData";
+import { ITaskData } from "../../domain/types/taskData";
 
 /***
  * Export localstore data 

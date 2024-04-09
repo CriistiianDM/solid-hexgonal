@@ -1,5 +1,5 @@
 import AbsRender from "../../domain/entities/absRender";
-import ITaskData from "../../domain/interfaces/taskData";
+import { ITaskData } from "../../domain/types/taskData";
 import LocalstoreData from "../repositories/localstore";
 
 /**

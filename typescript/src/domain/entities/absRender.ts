@@ -1,4 +1,4 @@
-import ITaskData from "../interfaces/taskData";
+import { ITaskData } from "../types/taskData";
 
 /**
  * Class Abstract

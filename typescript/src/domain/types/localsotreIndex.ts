@@ -1,6 +1,6 @@
 /**
  * interface IRenderTable
 */
-export default interface ILocalstoreIndex {
+export type ILocalstoreIndex = {
     getIndex(): number;
 }

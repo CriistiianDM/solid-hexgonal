@@ -1,6 +1,6 @@
 /**
  * interface IRenderTable
 */
-export default interface IRenderTable {
+export type IRenderTable = {
     render(): void;
 }
