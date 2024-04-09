@@ -1,10 +1,17 @@
 import AddEvent from "./application/controllers/controller";
+import { 
+    HandlerAddTask,
+    HandlerSubmit
+} 
+from "./application/controllers/controller";
 
 const addTask = new AddEvent({
     eventName: "#add-task",
     eventType: "click",
-    handleFunc: () => {
-        alert("Im Best!!!")
+    handleFunc: (e) => {
+        const handler = new HandlerAddTask();
+        e.currentTarget.value = "#form-container";
+        handler.execute(e);
     }
 });
 
@@ -12,9 +19,9 @@ const initForm = new AddEvent({
     eventName: "#form-new-task",
     eventType: "submit",
     handleFunc: (e) => {
-        console.log("aaaaaaaa")
         e.preventDefault();
-        alert("This Form")
+        const handler = new HandlerAddTask();
+        handler.execute(e);
     }
 });
 
