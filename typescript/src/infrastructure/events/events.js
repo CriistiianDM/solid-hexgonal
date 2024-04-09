@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.initCheckbox = exports.initForm = exports.addTask = exports.renderTable = void 0;
 var controller_1 = require("../../application/controllers/controller");
+var localstore_1 = require("../repositories/localstore");
 var controller_2 = require("../../application/controllers/controller");
 // instance class render table
 exports.renderTable = new controller_2.RenderTableTask();
@@ -21,7 +22,11 @@ exports.initForm = new controller_1.default({
     eventType: "submit",
     handleFunc: function (e) {
         e.preventDefault();
-        var handler = new controller_2.HandlerSubmit();
+        var handler = new controller_2.HandlerSubmit({
+            insRender: new controller_2.RenderTableTask(),
+            idTask: new localstore_1.IndexLocalstore(),
+            localstore: new localstore_1.default()
+        });
         handler.execute(e);
     }
 });
@@ -30,7 +35,10 @@ exports.initCheckbox = new controller_1.default({
     eventName: "#table-list-task tbody input[type='checkbox']",
     eventType: "change",
     handleFunc: function (e) {
-        var handler = new controller_2.CheckboxHandler();
+        var handler = new controller_2.CheckboxHandler({
+            insLocalstore: new localstore_1.default(),
+            insRender: new controller_2.RenderTableTask()
+        });
         handler.execute(e);
     }
 });

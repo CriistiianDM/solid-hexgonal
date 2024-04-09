@@ -74,22 +74,24 @@ exports.HandlerAddTask = HandlerAddTask;
 */
 var HandlerSubmit = /** @class */ (function (_super) {
     __extends(HandlerSubmit, _super);
-    function HandlerSubmit() {
+    function HandlerSubmit(obj) {
         var _this = _super.call(this) || this;
-        _this.insRender = new RenderTableTask();
+        _this.insRender = obj.insRender;
+        _this.idTask = obj.idTask;
+        _this.localstore = obj.localstore;
         return _this;
     }
     HandlerSubmit.prototype.execute = function (e) {
-        var form = e.currentTarget, data = this.generateDataSend(form), localstore = new localstore_1.default();
-        localstore.setData(data);
+        var form = e.currentTarget, data = this.generateDataSend(form);
+        this.localstore.setData(data);
         alert("Succes New Task");
         this.insRender.render();
         events_1.initCheckbox.listener();
     };
     HandlerSubmit.prototype.generateDataSend = function (form) {
-        var conf = config_1.default['formNewTask'], title = form.querySelector(conf["input-1"]).value, desc = form.querySelector(conf["input-2"]).value, type = parseInt(form.querySelector(conf["select-1"]).value, 10), idTask = new localstore_1.IndexLocalstore();
+        var conf = config_1.default['formNewTask'], title = form.querySelector(conf["input-1"]).value, desc = form.querySelector(conf["input-2"]).value, type = parseInt(form.querySelector(conf["select-1"]).value, 10);
         return {
-            id: idTask.getIndex(),
+            id: this.idTask.getIndex(),
             title: title,
             desc: desc,
             type: type
@@ -117,6 +119,9 @@ var RenderTableTask = /** @class */ (function (_super) {
             });
             tableTask.innerHTML = allTask_1;
         }
+        if (dataPrint.length <= 0) {
+            tableTask.innerHTML = 'No have task pending';
+        }
     };
     RenderTableTask.prototype.generateStruct = function (obj) {
         return "\n        <tr>\n            <td>\n                <div tag=\"".concat(obj.id, "\">\n                    <strong>").concat(obj.title, "</strong>\n                    <span>").concat(obj.desc, "</span>\n                    <input type=\"checkbox\" />\n                </div>\n            </td>\n        </tr>");
@@ -129,10 +134,10 @@ exports.RenderTableTask = RenderTableTask;
 */
 var CheckboxHandler = /** @class */ (function (_super) {
     __extends(CheckboxHandler, _super);
-    function CheckboxHandler() {
+    function CheckboxHandler(obj) {
         var _this = _super.call(this) || this;
-        _this.insLocalstore = new localstore_1.default();
-        _this.insRender = new RenderTableTask();
+        _this.insLocalstore = obj.insLocalstore;
+        _this.insRender = obj.insRender;
         return _this;
     }
     CheckboxHandler.prototype.execute = function (e) {

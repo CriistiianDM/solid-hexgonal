@@ -1,7 +1,7 @@
-import IEventController , { ITaskData } from "../../domain/interfaces/interfaces";
-import AbsController, { AbsHandlerEvent , AbsRender , AbsCheckbox } from "../../domain/entities/entities";
+import AbsController, { AbsHandlerEvent , AbsRender } from "../../domain/entities/entities";
 import LocalstoreData , { IndexLocalstore } from "../../infrastructure/repositories/localstore";
 import { initCheckbox } from "../../infrastructure/events/events";
+import IEventController , { ITaskData , ILocalstore , IRenderTable , ILocalstoreIndex } from "../../domain/interfaces/interfaces";
 import config from "../../config/config";
 
 /**
@@ -62,20 +62,27 @@ export class HandlerAddTask extends AbsHandlerEvent {
  * Create task 
 */
 export class HandlerSubmit extends AbsHandlerEvent {
-    insRender: RenderTableTask;
+    insRender: IRenderTable;
+    idTask: ILocalstoreIndex;
+    localstore: ILocalstore;
 
-    constructor() {
+    constructor(obj: {
+        insRender: IRenderTable,
+        idTask: ILocalstoreIndex,
+        localstore: ILocalstore
+    }) {
         super();
-        this.insRender = new RenderTableTask();
+        this.insRender = obj.insRender;
+        this.idTask = obj.idTask;
+        this.localstore = obj.localstore;
     }
 
     public execute<T extends Event>(e: T): void {
         const 
             form = e.currentTarget as HTMLFormElement,
-            data = this.generateDataSend(form),
-            localstore = new LocalstoreData();
+            data = this.generateDataSend(form);
 
-            localstore.setData(data);
+            this.localstore.setData(data);
             alert("Succes New Task");
             this.insRender.render();
             initCheckbox.listener();
@@ -86,11 +93,10 @@ export class HandlerSubmit extends AbsHandlerEvent {
             conf = config['formNewTask'],
             title = (form.querySelector(conf["input-1"]) as HTMLInputElement).value,
             desc = (form.querySelector(conf["input-2"]) as HTMLInputElement).value,
-            type = parseInt((form.querySelector(conf["select-1"]) as HTMLSelectElement).value, 10),
-            idTask = new IndexLocalstore();
+            type = parseInt((form.querySelector(conf["select-1"]) as HTMLSelectElement).value, 10);
     
         return {
-            id: idTask.getIndex(),
+            id: this.idTask.getIndex(),
             title,
             desc,
             type
@@ -114,11 +120,15 @@ export class RenderTableTask extends AbsRender {
             let allTask = '';
             tableTask.innerHTML = '';
 
-            (dataPrint).map( (element) => {
+            (dataPrint).map((element) => {
                 allTask+= this.generateStruct(element);
             })
 
             tableTask.innerHTML = allTask;
+        } 
+        
+        if (dataPrint.length <= 0) {
+            tableTask.innerHTML = 'No have task pending';
         }
     }
 
@@ -144,13 +154,16 @@ export class RenderTableTask extends AbsRender {
  * Remove task list
 */
 export class CheckboxHandler extends AbsHandlerEvent {
-    insLocalstore: LocalstoreData;
-    insRender: RenderTableTask;
+    insLocalstore: ILocalstore;
+    insRender: IRenderTable;
 
-    constructor() {
+    constructor(obj : {
+        insLocalstore: ILocalstore,
+        insRender: IRenderTable
+    }) {
         super();
-        this.insLocalstore = new LocalstoreData();
-        this.insRender = new RenderTableTask();
+        this.insLocalstore = obj.insLocalstore;
+        this.insRender = obj.insRender;
     }
 
     public execute<T extends Event>(e: T): void {
