@@ -6,6 +6,9 @@ export default interface IEventController {
     eventName: string
 }
 
+/**
+ * interface data task 
+*/
 export interface ITaskData {
     id: number;
     title: string;

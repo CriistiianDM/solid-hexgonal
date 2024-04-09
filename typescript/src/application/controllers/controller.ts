@@ -94,9 +94,13 @@ export class HandlerSubmit extends AbsHandlerEvent {
 
 }
 
+
+/**
+ * Render table of lst
+*/
 export class RenderTableTask extends AbsRender {
 
-    public render() {
+    public render(): void {
         const
             localstore = new LocalstoreData(),
             dataPrint = localstore.getData(),
