@@ -6,9 +6,10 @@ import {
 } 
 from "./application/controllers/controller";
 
-
+// instance class render table
 const renderTable = new RenderTableTask();
 
+// add event list a button class
 const addTask = new AddEvent({
     eventName: "#add-task",
     eventType: "click",
@@ -19,12 +20,12 @@ const addTask = new AddEvent({
     }
 });
 
+// add event lstener to form
 const initForm = new AddEvent({
     eventName: "#form-new-task",
     eventType: "submit",
     handleFunc: (e) => {
         e.preventDefault();
-        e.currentTarget.value = "#form-container";
         const handler = new HandlerSubmit();
         handler.execute(e);
     }
