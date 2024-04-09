@@ -20,6 +20,7 @@ export abstract class AbsHandlerEvent {
 export abstract class AbsLocalstore {
     abstract getData(): ITaskData[];
     abstract setData(obj: ITaskData): void;
+    abstract removeTask(task: number): void;
 }
 
 /**
@@ -28,4 +29,19 @@ export abstract class AbsLocalstore {
 export abstract class AbsRender {
     abstract render(): void;
     abstract generateStruct(obj: ITaskData): string;
+}
+
+/**
+ * Class Abstract
+*/
+export abstract class AbsCheckbox {
+    abstract execute(): void;
+}
+
+/**
+ * Class Abstract
+*/
+export abstract class AbsLocalstoreIndex {
+    abstract getIndex(): number;
+    abstract haveLocalstore(): void;
 }

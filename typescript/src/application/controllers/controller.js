@@ -15,9 +15,10 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RenderTableTask = exports.HandlerSubmit = exports.HandlerAddTask = void 0;
+exports.CheckboxHandler = exports.RenderTableTask = exports.HandlerSubmit = exports.HandlerAddTask = void 0;
 var entities_1 = require("../../domain/entities/entities");
 var localstore_1 = require("../../infrastructure/repositories/localstore");
+var events_1 = require("../../infrastructure/events/events");
 var config_1 = require("../../config/config");
 /**
  * Add event
@@ -33,13 +34,15 @@ var AddEvent = /** @class */ (function (_super) {
     }
     AddEvent.prototype.listener = function () {
         var _this = this;
-        var click = document.querySelector(this.eventName);
+        var nodesListener = document.querySelectorAll(this.eventName);
         /**
          * CLick - Add Task
         */
-        if (click) {
-            click.addEventListener(this.eventType, function (e) {
-                _this.handleFunc(e);
+        if (nodesListener) {
+            nodesListener.forEach(function (event) {
+                event.addEventListener(_this.eventType, function (e) {
+                    _this.handleFunc(e);
+                });
             });
         }
     };
@@ -81,11 +84,12 @@ var HandlerSubmit = /** @class */ (function (_super) {
         localstore.setData(data);
         alert("Succes New Task");
         this.insRender.render();
+        events_1.initCheckbox.listener();
     };
     HandlerSubmit.prototype.generateDataSend = function (form) {
-        var conf = config_1.default['formNewTask'], title = form.querySelector(conf["input-1"]).value, desc = form.querySelector(conf["input-2"]).value, type = parseInt(form.querySelector(conf["select-1"]).value, 10), idTask = new localstore_1.default();
+        var conf = config_1.default['formNewTask'], title = form.querySelector(conf["input-1"]).value, desc = form.querySelector(conf["input-2"]).value, type = parseInt(form.querySelector(conf["select-1"]).value, 10), idTask = new localstore_1.IndexLocalstore();
         return {
-            id: (idTask.getData()).length + 1,
+            id: idTask.getIndex(),
             title: title,
             desc: desc,
             type: type
@@ -94,6 +98,9 @@ var HandlerSubmit = /** @class */ (function (_super) {
     return HandlerSubmit;
 }(entities_1.AbsHandlerEvent));
 exports.HandlerSubmit = HandlerSubmit;
+/**
+ * Render table of lst
+*/
 var RenderTableTask = /** @class */ (function (_super) {
     __extends(RenderTableTask, _super);
     function RenderTableTask() {
@@ -117,3 +124,23 @@ var RenderTableTask = /** @class */ (function (_super) {
     return RenderTableTask;
 }(entities_1.AbsRender));
 exports.RenderTableTask = RenderTableTask;
+/**
+ * Remove task list
+*/
+var CheckboxHandler = /** @class */ (function (_super) {
+    __extends(CheckboxHandler, _super);
+    function CheckboxHandler() {
+        var _this = _super.call(this) || this;
+        _this.insLocalstore = new localstore_1.default();
+        _this.insRender = new RenderTableTask();
+        return _this;
+    }
+    CheckboxHandler.prototype.execute = function (e) {
+        var checkbox = e.currentTarget, div = checkbox.parentElement, tag = div.getAttribute('tag');
+        this.insLocalstore.removeTask(parseInt(tag));
+        this.insRender.render();
+        events_1.initCheckbox.listener();
+    };
+    return CheckboxHandler;
+}(entities_1.AbsHandlerEvent));
+exports.CheckboxHandler = CheckboxHandler;
