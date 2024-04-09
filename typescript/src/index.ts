@@ -1,9 +1,8 @@
-import {
-    addTask,
-    initForm,
-    renderTable,
-    initCheckbox
-} from "./infrastructure/events/events"
+import { addTask } from "./infrastructure/events/evAddTask";
+import { initForm } from "./infrastructure/events/evInitForm";
+import RenderTableTask from "./infrastructure/handlers/renderTableTask";
+import { initCheckbox } from "./infrastructure/events/evCheckbox";
+const renderTable = new RenderTableTask();
 
 /**
  * Execute Events

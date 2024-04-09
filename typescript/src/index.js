@@ -1,10 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var events_1 = require("./infrastructure/events/events");
+var evAddTask_1 = require("./infrastructure/events/evAddTask");
+var evInitForm_1 = require("./infrastructure/events/evInitForm");
+var renderTableTask_1 = require("./infrastructure/handlers/renderTableTask");
+var evCheckbox_1 = require("./infrastructure/events/evCheckbox");
+var renderTable = new renderTableTask_1.default();
 /**
  * Execute Events
 */
-events_1.addTask.listener();
-events_1.initForm.listener();
-events_1.renderTable.render();
-events_1.initCheckbox.listener();
+evAddTask_1.addTask.listener();
+evInitForm_1.initForm.listener();
+renderTable.render();
+evCheckbox_1.initCheckbox.listener();

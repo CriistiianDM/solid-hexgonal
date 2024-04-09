@@ -16,7 +16,8 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.IndexLocalstore = void 0;
-var entities_1 = require("../../domain/entities/entities");
+var AbsLocalstore_1 = require("../../domain/entities/AbsLocalstore");
+var absLocalstoreIndex_1 = require("../../domain/entities/absLocalstoreIndex");
 /***
  * Export localstore data
 */
@@ -49,7 +50,7 @@ var LocalstoreData = /** @class */ (function (_super) {
         }
     };
     return LocalstoreData;
-}(entities_1.AbsLocalstore));
+}(AbsLocalstore_1.default));
 exports.default = LocalstoreData;
 /***
  * Export index unique
@@ -78,5 +79,5 @@ var IndexLocalstore = /** @class */ (function (_super) {
         }
     };
     return IndexLocalstore;
-}(entities_1.AbsLocalstoreIndex));
+}(absLocalstoreIndex_1.default));
 exports.IndexLocalstore = IndexLocalstore;
