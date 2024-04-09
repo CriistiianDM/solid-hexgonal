@@ -171,6 +171,7 @@ export class CheckboxHandler extends AbsHandlerEvent {
             checkbox = e.currentTarget as HTMLInputElement,
             div = checkbox.parentElement,
             tag = div.getAttribute('tag');
+            
         this.insLocalstore.removeTask(parseInt(tag));
         this.insRender.render();
         initCheckbox.listener();

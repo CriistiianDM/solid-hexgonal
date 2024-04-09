@@ -11,12 +11,7 @@ export default class LocalstoreData extends AbsLocalstore {
         return JSON.parse(localStorage.getItem("task"))
     }
 
-    public setData(obj: {
-        id: number ,
-        title: string,
-        desc: string,
-        type: number
-    }) {
+    public setData(obj: ITaskData) {
         const allTask = this.getData();
         allTask.push(obj)
         localStorage.setItem("task", JSON.stringify(allTask));
