@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AbsLocalstore = exports.AbsHandlerEvent = void 0;
+exports.AbsRender = exports.AbsLocalstore = exports.AbsHandlerEvent = void 0;
 /**
  * Class Abstract add task
 */
@@ -11,7 +11,7 @@ var AbsController = /** @class */ (function () {
 }());
 exports.default = AbsController;
 /**
- * Class Abstract add task
+ * Class Abstract
 */
 var AbsHandlerEvent = /** @class */ (function () {
     function AbsHandlerEvent() {
@@ -20,7 +20,7 @@ var AbsHandlerEvent = /** @class */ (function () {
 }());
 exports.AbsHandlerEvent = AbsHandlerEvent;
 /**
- * Class Abstract add task
+ * Class Abstract
 */
 var AbsLocalstore = /** @class */ (function () {
     function AbsLocalstore() {
@@ -28,3 +28,12 @@ var AbsLocalstore = /** @class */ (function () {
     return AbsLocalstore;
 }());
 exports.AbsLocalstore = AbsLocalstore;
+/**
+ *
+*/
+var AbsRender = /** @class */ (function () {
+    function AbsRender() {
+    }
+    return AbsRender;
+}());
+exports.AbsRender = AbsRender;

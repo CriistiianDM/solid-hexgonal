@@ -15,11 +15,12 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.HandlerSubmit = exports.HandlerAddTask = void 0;
+exports.RenderTableTask = exports.HandlerSubmit = exports.HandlerAddTask = void 0;
 var entities_1 = require("../../domain/entities/entities");
-var entities_2 = require("../../domain/entities/entities");
+var localstore_1 = require("../../infrastructure/repositories/localstore");
+var config_1 = require("../../config/config");
 /**
- * Init logit
+ * Add event
 */
 var AddEvent = /** @class */ (function (_super) {
     __extends(AddEvent, _super);
@@ -46,7 +47,7 @@ var AddEvent = /** @class */ (function (_super) {
 }(entities_1.default));
 exports.default = AddEvent;
 /**
- *
+ *  Add Task
 */
 var HandlerAddTask = /** @class */ (function (_super) {
     __extends(HandlerAddTask, _super);
@@ -58,31 +59,61 @@ var HandlerAddTask = /** @class */ (function (_super) {
         if (hiddenElement && hiddenElement.classList.contains("display-none")) {
             hiddenElement.classList.remove("display-none");
         }
+        else {
+            hiddenElement.classList.add("display-none");
+        }
     };
     return HandlerAddTask;
-}(entities_2.AbsHandlerEvent));
+}(entities_1.AbsHandlerEvent));
 exports.HandlerAddTask = HandlerAddTask;
+/**
+ * Create task
+*/
 var HandlerSubmit = /** @class */ (function (_super) {
     __extends(HandlerSubmit, _super);
     function HandlerSubmit() {
-        return _super !== null && _super.apply(this, arguments) || this;
+        var _this = _super.call(this) || this;
+        _this.insRender = new RenderTableTask();
+        return _this;
     }
     HandlerSubmit.prototype.execute = function (e) {
-        var form = e.currentTarget;
-        // Obtener los valores de los campos del formulario
-        var title = form.querySelector('input[name="title-task"]').value;
-        var desc = form.querySelector('input[name="desc-task"]').value;
-        var type = parseInt(form.querySelector('select[name="type-select"]').value, 10);
-        // Crear un objeto con la información del formulario
-        var formData = {
-            id: Date.now(), // Generar un ID único
+        var form = e.currentTarget, data = this.generateDataSend(form), localstore = new localstore_1.default();
+        localstore.setData(data);
+        alert("Succes New Task");
+        this.insRender.render();
+    };
+    HandlerSubmit.prototype.generateDataSend = function (form) {
+        var conf = config_1.default['formNewTask'], title = form.querySelector(conf["input-1"]).value, desc = form.querySelector(conf["input-2"]).value, type = parseInt(form.querySelector(conf["select-1"]).value, 10), idTask = new localstore_1.default();
+        return {
+            id: (idTask.getData()).length + 1,
             title: title,
             desc: desc,
             type: type
         };
-        // Hacer algo con los datos del formulario
-        console.log(formData);
     };
     return HandlerSubmit;
-}(entities_2.AbsHandlerEvent));
+}(entities_1.AbsHandlerEvent));
 exports.HandlerSubmit = HandlerSubmit;
+var RenderTableTask = /** @class */ (function (_super) {
+    __extends(RenderTableTask, _super);
+    function RenderTableTask() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    RenderTableTask.prototype.render = function () {
+        var _this = this;
+        var localstore = new localstore_1.default(), dataPrint = localstore.getData(), tableTask = document.querySelector('#table-list-task tbody');
+        if (dataPrint.length > 0) {
+            var allTask_1 = '';
+            tableTask.innerHTML = '';
+            (dataPrint).map(function (element) {
+                allTask_1 += _this.generateStruct(element);
+            });
+            tableTask.innerHTML = allTask_1;
+        }
+    };
+    RenderTableTask.prototype.generateStruct = function (obj) {
+        return "\n        <tr>\n            <td>\n                <div tag=\"".concat(obj.id, "\">\n                    <strong>").concat(obj.title, "</strong>\n                    <span>").concat(obj.desc, "</span>\n                    <input type=\"checkbox\" />\n                </div>\n            </td>\n        </tr>");
+    };
+    return RenderTableTask;
+}(entities_1.AbsRender));
+exports.RenderTableTask = RenderTableTask;

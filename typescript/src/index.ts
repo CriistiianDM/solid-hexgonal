@@ -1,9 +1,13 @@
 import AddEvent from "./application/controllers/controller";
 import { 
     HandlerAddTask,
-    HandlerSubmit
+    HandlerSubmit,
+    RenderTableTask
 } 
 from "./application/controllers/controller";
+
+
+const renderTable = new RenderTableTask();
 
 const addTask = new AddEvent({
     eventName: "#add-task",
@@ -20,14 +24,15 @@ const initForm = new AddEvent({
     eventType: "submit",
     handleFunc: (e) => {
         e.preventDefault();
-        const handler = new HandlerAddTask();
+        e.currentTarget.value = "#form-container";
+        const handler = new HandlerSubmit();
         handler.execute(e);
     }
 });
-
 
 /**
  * Execute Events
 */
 addTask.listener();
 initForm.listener();
+renderTable.render();

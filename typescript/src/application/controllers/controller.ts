@@ -1,9 +1,10 @@
-import AbsController from "../../domain/entities/entities";
-import IEventController from "../../domain/interfaces/interfaces";
-import { AbsHandlerEvent } from "../../domain/entities/entities";
+import IEventController , { ITaskData } from "../../domain/interfaces/interfaces";
+import AbsController, { AbsHandlerEvent , AbsRender } from "../../domain/entities/entities";
+import LocalstoreData from "../../infrastructure/repositories/localstore";
+import config from "../../config/config";
 
 /**
- * Init logit
+ * Add event
 */
 export default class AddEvent extends AbsController implements IEventController {
     eventType: string;
@@ -36,7 +37,7 @@ export default class AddEvent extends AbsController implements IEventController 
 }
 
 /**
- *   
+ *  Add Task
 */
 export class HandlerAddTask extends AbsHandlerEvent {
 
@@ -47,29 +48,86 @@ export class HandlerAddTask extends AbsHandlerEvent {
 
         if (hiddenElement && hiddenElement.classList.contains("display-none")) {
             hiddenElement.classList.remove("display-none");
+        } else {
+            hiddenElement.classList.add("display-none");
         }
     }
 }
 
+/**
+ * Create task 
+*/
 export class HandlerSubmit extends AbsHandlerEvent {
+    insRender: RenderTableTask;
+
+    constructor() {
+        super();
+        this.insRender= new RenderTableTask();
+    }
 
     public execute<T extends Event>(e: T): void {
-        const form = e.currentTarget as HTMLFormElement;
+        const 
+            form = e.currentTarget as HTMLFormElement,
+            data = this.generateDataSend(form),
+            localstore = new LocalstoreData();
+
+            localstore.setData(data);
+            alert("Succes New Task");
+            this.insRender.render();
+    }
+
+    private generateDataSend(form: HTMLFormElement): ITaskData {
+        const 
+            conf = config['formNewTask'],
+            title = (form.querySelector(conf["input-1"]) as HTMLInputElement).value,
+            desc = (form.querySelector(conf["input-2"]) as HTMLInputElement).value,
+            type = parseInt((form.querySelector(conf["select-1"]) as HTMLSelectElement).value, 10),
+            idTask = new LocalstoreData();
     
-        // Obtener los valores de los campos del formulario
-        const title = (form.querySelector('input[name="title-task"]') as HTMLInputElement).value;
-        const desc = (form.querySelector('input[name="desc-task"]') as HTMLInputElement).value;
-        const type = parseInt((form.querySelector('select[name="type-select"]') as HTMLSelectElement).value, 10);
-    
-        // Crear un objeto con la información del formulario
-        const formData = {
-            id: Date.now(), // Generar un ID único
+        return {
+            id: (idTask.getData()).length + 1,
             title,
             desc,
             type
         };
-    
-        // Hacer algo con los datos del formulario
-        console.log(formData);
+    }
+
+}
+
+export class RenderTableTask extends AbsRender {
+
+    public render() {
+        const
+            localstore = new LocalstoreData(),
+            dataPrint = localstore.getData(),
+            tableTask = document.querySelector('#table-list-task tbody');
+
+        if (dataPrint.length > 0) {
+            let allTask = '';
+            tableTask.innerHTML = '';
+
+            (dataPrint).map( (element) => {
+                allTask+= this.generateStruct(element);
+            })
+
+            tableTask.innerHTML = allTask;
+        }
+    }
+
+    public generateStruct(obj: {
+        title: string,
+        desc: string,
+        id: number,
+    }): string {
+        return `
+        <tr>
+            <td>
+                <div tag="${obj.id}">
+                    <strong>${obj.title}</strong>
+                    <span>${obj.desc}</span>
+                    <input type="checkbox" />
+                </div>
+            </td>
+        </tr>`
     }
 }
