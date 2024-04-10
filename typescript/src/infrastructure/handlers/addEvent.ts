@@ -1,11 +1,6 @@
 import AbsController from "../../domain/entities/absController";
 import IEventExecute from "../../domain/interfaces/eventExecute";
-
-type EventHandler = {
-    eventType: string,
-    eventName: string,
-    handleFunc: Function
-};
+import { EventHandler } from "../../domain/types/eventHandler";
 
 /**
  * Add event

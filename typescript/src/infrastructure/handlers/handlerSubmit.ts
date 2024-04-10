@@ -1,23 +1,23 @@
 import AbsHandlerEvent from "../../domain/entities/absHandlerEvent";
 import { IRenderTable } from "../../domain/types/renderTable";
-import { ILocalstoreIndex } from "../../domain/types/localsotreIndex";
-import { ILocalstore } from "../../domain/types/localstoreData";
-import config from "../../config/config";
 import { ITaskData } from "../../domain/types/taskData";
 import { initCheckbox } from "../events/evCheckbox";
+import { LocalstoreIndex } from "../../domain/types/localsotreIndex";
+import { LocalstorePost } from "../../domain/types/localstorePost";
+import config from "../../config/config";
 
 /**
  * Create task 
 */
 export default class HandlerSubmit extends AbsHandlerEvent {
     insRender: IRenderTable;
-    idTask: ILocalstoreIndex;
-    localstore: ILocalstore;
+    idTask: LocalstoreIndex;
+    localstore: LocalstorePost;
 
     constructor(obj: {
         insRender: IRenderTable,
-        idTask: ILocalstoreIndex,
-        localstore: ILocalstore
+        idTask: LocalstoreIndex,
+        localstore: LocalstorePost
     }) {
         super();
         this.insRender = obj.insRender;

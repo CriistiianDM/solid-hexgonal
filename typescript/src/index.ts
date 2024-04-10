@@ -2,7 +2,11 @@ import { addTask } from "./infrastructure/events/evAddTask";
 import { initForm } from "./infrastructure/events/evInitForm";
 import RenderTableTask from "./infrastructure/handlers/renderTableTask";
 import { initCheckbox } from "./infrastructure/events/evCheckbox";
-const renderTable = new RenderTableTask();
+import LocalstoreGetData from "./infrastructure/repositories/localstore/localstoreGetData";
+
+const 
+    localstoreGetData = new LocalstoreGetData(),
+    renderTable = new RenderTableTask(localstoreGetData);
 
 /**
  * Execute Events

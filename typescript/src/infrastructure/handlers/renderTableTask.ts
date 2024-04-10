@@ -1,16 +1,21 @@
 import AbsRender from "../../domain/entities/absRender";
 import { ITaskData } from "../../domain/types/taskData";
-import LocalstoreData from "../repositories/localstore";
-
+import LocalstoreGetData from "../repositories/localstore/localstoreGetData";
+import { LocalstoreGet } from "../../domain/types/localstoreGet";
 /**
  * Render table of lst
 */
 export default class RenderTableTask extends AbsRender {
+    instLocalstoreGet: LocalstoreGet;
+
+    constructor(instLocalstoreGet: LocalstoreGet) {
+        super();
+        this.instLocalstoreGet = instLocalstoreGet;
+    }
 
     public render(): void {
         const
-            localstore = new LocalstoreData(),
-            dataPrint = localstore.getData(),
+            dataPrint = this.instLocalstoreGet.getData(),
             tableTask = document.querySelector('#table-list-task tbody');
 
         if (dataPrint.length > 0) {
