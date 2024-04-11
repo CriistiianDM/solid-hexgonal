@@ -1,0 +1,41 @@
+,<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-do</title>
+</head>
+<body>
+    <main class="container-primary">
+        <header>
+            <h1>----- TASK LIST -----</h1>
+        </header>
+        <section class="section-new-task">
+            <a id="add-task">add Task</a>
+            <div class="display-none" id="form-container">
+                 <form id="form-new-task">
+                        <label> Title Task </label>
+                        <input type="text" name="title-task" /> 
+                        <button type="submit">
+                            Create Task
+                        </button>
+                 </form>
+            </div>
+        </section>
+        <section class="task-list">
+            <table id="table-list-task">
+                <thead>
+                    <tr>
+                        <th>
+                            List task created
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </section>
+     </main>
+     <script src="dist/main.js"></script>
+</body>
+</html>
